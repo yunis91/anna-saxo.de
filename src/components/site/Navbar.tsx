@@ -21,14 +21,6 @@ function Wordmark({ onClick }: { onClick?: () => void }) {
 			className="flex items-center gap-2.5 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:focus-visible:outline-white"
 			aria-label={`${SITE.name}, zur Startseite`}
 		>
-			{/* TODO: replace placeholder with Anna's real portrait. */}
-			<Image
-				src="https://picsum.photos/seed/anna-saxo-portrait/80/80"
-				alt=""
-				width={40}
-				height={40}
-				className="h-9 w-9 rounded-full object-cover ring-1 ring-zinc-900/10 dark:ring-white/15"
-			/>
 			<span className="text-[15px] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
 				{SITE.name}
 			</span>
@@ -49,9 +41,10 @@ export function Navbar({
 	const reduce = useReducedMotion();
 	const pathname = usePathname() || "/";
 	const firstSeg = pathname.split("/").filter(Boolean)[0];
-	const currentLocale = LOCALE_CODES.includes(firstSeg) ? firstSeg : DEFAULT_LOCALE;
-	const nav =
-		navByLocale[currentLocale] ?? navByLocale[DEFAULT_LOCALE] ?? [];
+	const currentLocale = LOCALE_CODES.includes(firstSeg)
+		? firstSeg
+		: DEFAULT_LOCALE;
+	const nav = navByLocale[currentLocale] ?? navByLocale[DEFAULT_LOCALE] ?? [];
 
 	useEffect(() => {
 		if (!open) return;
@@ -73,13 +66,13 @@ export function Navbar({
 
 				<div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
 					{nav.map((item) => (
-						<a
+						<Link
 							key={item.link}
 							href={item.link}
 							className="text-sm font-medium text-zinc-600 transition-colors hover:text-brand-700 dark:text-zinc-300 dark:hover:text-brand-300"
 						>
 							{item.label}
-						</a>
+						</Link>
 					))}
 				</div>
 
@@ -140,14 +133,14 @@ export function Navbar({
 
 							<div className="mt-6 flex flex-col gap-1">
 								{nav.map((item) => (
-									<a
+									<Link
 										key={item.link}
 										href={item.link}
 										onClick={() => setOpen(false)}
 										className="rounded-2xl px-3 py-3 text-lg font-medium text-zinc-800 transition-colors hover:bg-zinc-900/5 dark:text-zinc-100 dark:hover:bg-white/5"
 									>
 										{item.label}
-									</a>
+									</Link>
 								))}
 							</div>
 

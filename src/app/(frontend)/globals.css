@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /*
   Bento minimalist design system - light tones, Allianz-inspired blue accent.
@@ -8,111 +8,111 @@
   Dark mode follows the system preference (no JS, no flash).
 */
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+	--font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+	--font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  --color-canvas: #edf1f7;
-  --color-canvas-dark: #070b16;
-  --radius-card: 28px;
+	--color-canvas: #edf1f7;
+	--color-canvas-dark: #070b16;
+	--radius-card: 28px;
 
-  /* Allianz-inspired blue scale. */
-  --color-brand-50: #edf3fc;
-  --color-brand-100: #d8e6f9;
-  --color-brand-200: #b3cdf2;
-  --color-brand-300: #84ace6;
-  --color-brand-400: #5388d9;
-  --color-brand-500: #2e6bcb;
-  --color-brand-600: #1a54ad;
-  --color-brand-700: #0a47a0;
-  --color-brand-800: #003781;
-  --color-brand-900: #052c63;
-  --color-brand-950: #041e45;
+	/* Allianz-inspired blue scale. */
+	--color-brand-50: #edf3fc;
+	--color-brand-100: #d8e6f9;
+	--color-brand-200: #b3cdf2;
+	--color-brand-300: #84ace6;
+	--color-brand-400: #5388d9;
+	--color-brand-500: #2e6bcb;
+	--color-brand-600: #1a54ad;
+	--color-brand-700: #0a47a0;
+	--color-brand-800: #003781;
+	--color-brand-900: #052c63;
+	--color-brand-950: #041e45;
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+	html {
+		scroll-behavior: smooth;
+	}
 
-  body {
-    @apply bg-canvas text-zinc-900 antialiased;
-    @apply dark:bg-canvas-dark dark:text-zinc-100;
-    font-feature-settings: 'cv11', 'ss01';
-    text-rendering: optimizeLegibility;
-  }
+	body {
+		@apply bg-canvas text-zinc-900 antialiased;
+		@apply dark:bg-canvas-dark dark:text-zinc-100;
+		font-feature-settings: "cv11", "ss01";
+		text-rendering: optimizeLegibility;
+	}
 
-  ::selection {
-    @apply bg-brand-700/15 text-brand-900 dark:bg-brand-400/25 dark:text-brand-100;
-  }
+	::selection {
+		@apply bg-brand-700/15 text-brand-900 dark:bg-brand-400/25 dark:text-brand-100;
+	}
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
 
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
-    }
-  }
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.001ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.001ms !important;
+		}
+	}
 }
 
 @layer components {
-  /* Bento tile surface. Apply padding at the call site. */
-  .card {
-    @apply rounded-card bg-white ring-1 ring-zinc-900/[0.04] shadow-[0_2px_8px_rgba(15,23,42,0.04),0_18px_40px_-22px_rgba(15,23,42,0.14)];
-    @apply dark:bg-zinc-900 dark:ring-white/10 dark:shadow-none;
-  }
+	/* Bento tile surface. Apply padding at the call site. */
+	.card {
+		@apply rounded-card bg-white ring-1 ring-zinc-900/[0.04] shadow-[0_2px_8px_rgba(15,23,42,0.04),0_18px_40px_-22px_rgba(15,23,42,0.14)];
+		@apply dark:bg-zinc-900 dark:ring-white/10 dark:shadow-none;
+	}
 
-  /* Allianz-blue accent tile (used sparingly for bento contrast). */
-  .card-brand {
-    @apply rounded-card bg-brand-800 text-white ring-1 ring-white/10 shadow-[0_18px_40px_-22px_rgba(0,55,129,0.5)];
-  }
+	/* Allianz-blue accent tile (used sparingly for bento contrast). */
+	.card-brand {
+		@apply rounded-card bg-brand-800 text-white ring-1 ring-white/10 shadow-[0_18px_40px_-22px_rgba(0,55,129,0.5)];
+	}
 
-  /* Pill buttons. */
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 dark:hover:bg-brand-600;
-  }
+	/* Pill buttons. */
+	.btn-primary {
+		@apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-700 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 dark:hover:bg-brand-600;
+	}
 
-  .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-zinc-900 transition-colors hover:border-brand-300 hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 dark:border-white/15 dark:text-zinc-100 dark:hover:border-white/25 dark:hover:bg-white/5;
-  }
+	.btn-outline {
+		@apply inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium text-zinc-900 transition-colors hover:border-brand-300 hover:bg-brand-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 dark:border-white/15 dark:text-zinc-100 dark:hover:border-white/25 dark:hover:bg-white/5;
+	}
 }
 
 /* Outer canvas frame + bento container width. */
 .canvas {
-  @apply min-h-[100dvh] px-3 py-3 sm:px-4 sm:py-4 lg:px-6 lg:py-5;
+	@apply min-h-[100dvh] px-3 py-3 sm:px-4 sm:py-4 lg:px-6 lg:py-5;
 }
 
 .bento {
-  @apply mx-auto w-full max-w-[1380px];
+	@apply mx-auto w-full max-w-[1380px] min-h-[calc(100dvh-(var(--spacing)*6))] sm:min-h-[calc(100dvh-(var(--spacing)*8))] lg:min-h-[calc(100dvh-(var(--spacing)*10))];
 }
 
 /* Rendered rich-text (Text module). */
 .rich {
-  @apply text-lg leading-relaxed text-zinc-600 dark:text-zinc-300;
+	@apply text-lg leading-relaxed text-zinc-600 dark:text-zinc-300;
 }
 .rich :where(h2) {
-  @apply mb-4 mt-8 text-2xl font-bold tracking-tight text-zinc-900 first:mt-0 dark:text-white;
+	@apply mb-4 mt-8 text-2xl font-bold tracking-tight text-zinc-900 first:mt-0 dark:text-white;
 }
 .rich :where(h3) {
-  @apply mb-3 mt-6 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white;
+	@apply mb-3 mt-6 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white;
 }
 .rich :where(p) {
-  @apply my-4 first:mt-0 last:mb-0;
+	@apply my-4 first:mt-0 last:mb-0;
 }
 .rich :where(ul) {
-  @apply my-4 list-disc space-y-2 pl-6;
+	@apply my-4 list-disc space-y-2 pl-6;
 }
 .rich :where(ol) {
-  @apply my-4 list-decimal space-y-2 pl-6;
+	@apply my-4 list-decimal space-y-2 pl-6;
 }
 .rich :where(a) {
-  @apply font-medium text-brand-700 underline underline-offset-2 hover:text-brand-800 dark:text-brand-300;
+	@apply font-medium text-brand-700 underline underline-offset-2 hover:text-brand-800 dark:text-brand-300;
 }
 .rich :where(strong) {
-  @apply font-semibold text-zinc-900 dark:text-white;
+	@apply font-semibold text-zinc-900 dark:text-white;
 }
