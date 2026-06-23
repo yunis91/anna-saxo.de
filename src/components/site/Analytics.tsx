@@ -2,12 +2,11 @@
 
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
+import { acceptedCategory } from 'vanilla-cookieconsent'
 
 interface AnalyticsProps {
   gaId?: string | null
 }
-
-type CookieConsentApi = { acceptedCategory: (category: string) => boolean }
 
 /**
  * Loads Google Analytics 4 only after the visitor accepts the "analytics"
@@ -20,8 +19,7 @@ export function Analytics({ gaId }: AnalyticsProps) {
   useEffect(() => {
     const hasConsent = (): boolean => {
       try {
-        const cc = (window as unknown as { CookieConsent?: CookieConsentApi }).CookieConsent
-        return cc ? cc.acceptedCategory('analytics') : false
+        return acceptedCategory('analytics')
       } catch {
         return false
       }
