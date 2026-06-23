@@ -10,6 +10,7 @@ import { Analytics } from "@/components/site/Analytics";
 import {
 	getActiveLocales,
 	getContact,
+	getFooterLegal,
 	getGaId,
 	getNavByLocale,
 	getSiteName,
@@ -45,13 +46,15 @@ export default async function FrontendLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const [locales, contact, navByLocale, gaId, siteName] = await Promise.all([
-		getActiveLocales(),
-		getContact(),
-		getNavByLocale(),
-		getGaId(),
-		getSiteName(),
-	]);
+	const [locales, contact, navByLocale, gaId, siteName, footerLegal] =
+		await Promise.all([
+			getActiveLocales(),
+			getContact(),
+			getNavByLocale(),
+			getGaId(),
+			getSiteName(),
+			getFooterLegal(),
+		]);
 
 	return (
 		<html lang="de" className={`${GeistSans.variable} ${GeistMono.variable}`}>
@@ -65,7 +68,7 @@ export default async function FrontendLayout({
 							siteName={siteName}
 						/>
 						{children}
-						<Footer siteName={siteName} />
+						<Footer siteName={siteName} legal={footerLegal} />
 					</div>
 				</div>
 				<CookieBanner />

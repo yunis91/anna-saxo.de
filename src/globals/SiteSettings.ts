@@ -42,6 +42,20 @@ export const SiteSettings: GlobalConfig = {
 			],
 		},
 		{
+			name: "footerLegal",
+			type: "array",
+			label: "Footer-Links (rechtliches)",
+			labels: { singular: "Link", plural: "Links" },
+			admin: {
+				description:
+					"Links im Footer (z. B. Impressum, Datenschutz). Wenn leer, werden Impressum und Datenschutz angezeigt.",
+			},
+			fields: [
+				{ name: "label", type: "text", label: "Beschriftung", required: true },
+				{ name: "link", type: "text", label: "Link", required: true },
+			],
+		},
+		{
 			type: "group",
 			name: "contact",
 			label: "Kontaktdaten",

@@ -711,6 +711,16 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Links im Footer (z. B. Impressum, Datenschutz). Wenn leer, werden Impressum und Datenschutz angezeigt.
+   */
+  footerLegal?:
+    | {
+        label: string;
+        link: string;
+        id?: string | null;
+      }[]
+    | null;
   contact?: {
     phone?: string | null;
     email?: string | null;
@@ -746,6 +756,13 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         name?: T;
       };
   nav?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        id?: T;
+      };
+  footerLegal?:
     | T
     | {
         label?: T;

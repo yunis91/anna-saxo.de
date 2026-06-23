@@ -82,6 +82,23 @@ export async function getContact(): Promise<ContactDetails> {
   }
 }
 
+const DEFAULT_FOOTER_LEGAL: NavItem[] = [
+  { label: 'Impressum', link: '/impressum' },
+  { label: 'Datenschutz', link: '/datenschutz' },
+]
+
+/** Editor-managed footer legal links from SiteSettings (with default fallback). */
+export async function getFooterLegal(): Promise<NavItem[]> {
+  try {
+    const payload = await getClient()
+    const settings = await payload.findGlobal({ slug: 'site-settings' })
+    const links = settings?.footerLegal as NavItem[] | undefined
+    return links?.length ? links.map((l) => ({ label: l.label, link: l.link })) : DEFAULT_FOOTER_LEGAL
+  } catch {
+    return DEFAULT_FOOTER_LEGAL
+  }
+}
+
 /** Editor-managed site name from the SiteSettings global (with code fallback). */
 export async function getSiteName(): Promise<string> {
   try {

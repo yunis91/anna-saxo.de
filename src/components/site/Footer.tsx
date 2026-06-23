@@ -1,18 +1,23 @@
 import { SITE } from "@/lib/site";
-import { CtaButton } from "./CtaButton";
+import type { NavItem } from "@/lib/payload-pages";
+import { CookieSettingsLink } from "./CookieSettingsLink";
 import Link from "next/link";
 
-const LEGAL = [
-	{ label: "Impressum", href: "/impressum" },
-	{ label: "Datenschutz", href: "/datenschutz" },
+const DEFAULT_LEGAL: NavItem[] = [
+	{ label: "Impressum", link: "/impressum" },
+	{ label: "Datenschutz", link: "/datenschutz" },
 ];
 
 const linkClass =
 	"text-sm text-zinc-600 transition-colors hover:text-brand-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700 dark:text-zinc-400 dark:hover:text-brand-300";
 
-const headingClass = "text-sm font-semibold text-zinc-900 dark:text-zinc-100";
-
-export function Footer({ siteName = SITE.name }: { siteName?: string }) {
+export function Footer({
+	siteName = SITE.name,
+	legal = DEFAULT_LEGAL,
+}: {
+	siteName?: string;
+	legal?: NavItem[];
+}) {
 	const year = new Date().getFullYear();
 
 	return (
@@ -22,13 +27,16 @@ export function Footer({ siteName = SITE.name }: { siteName?: string }) {
 					© {year} {siteName}. Alle Rechte vorbehalten.
 				</p>
 				<ul className="flex flex-row flex-wrap gap-3">
-					{LEGAL.map((item) => (
-						<li key={item.href}>
-							<Link href={item.href} className={linkClass}>
+					{legal.map((item) => (
+						<li key={item.link}>
+							<Link href={item.link} className={linkClass}>
 								{item.label}
 							</Link>
 						</li>
 					))}
+					<li>
+						<CookieSettingsLink label="Cookie-Einstellungen" className={linkClass} />
+					</li>
 				</ul>
 			</div>
 		</footer>
