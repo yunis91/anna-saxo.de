@@ -33,10 +33,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-	themeColor: [
-		{ media: "(prefers-color-scheme: light)", color: "#edf1f7" },
-		{ media: "(prefers-color-scheme: dark)", color: "#070b16" },
-	],
+	// Light theme is forced site-wide; keep the browser chrome light too.
+	themeColor: "#edf1f7",
 	width: "device-width",
 	initialScale: 1,
 };

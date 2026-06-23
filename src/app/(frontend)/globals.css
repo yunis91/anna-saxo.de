@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 /*
+  Light theme is forced site-wide. The `dark:` variant is rebound from the
+  system preference to a `.dark` class that is never added to the document,
+  so all existing dark-mode styles stay in the code but never activate.
+  To re-enable dark mode later, remove this line (back to prefers-color-scheme)
+  or add the `.dark` class to <html>.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
   Bento minimalist design system - light tones, Allianz-inspired blue accent.
   Canvas: light cool blue-gray. Cards: white tiles, large radius, soft shadow.
   Accent: Allianz Blue (#003781) + a vivid interactive blue. One accent, page-wide.
