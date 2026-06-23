@@ -21,7 +21,7 @@ function Wordmark({ name, onClick }: { name: string; onClick?: () => void }) {
 			className="flex items-center gap-2.5 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:focus-visible:outline-white"
 			aria-label={`${name}, zur Startseite`}
 		>
-			<span className="text-[15px] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+			<span className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
 				{name}
 			</span>
 		</Link>
