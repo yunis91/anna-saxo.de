@@ -313,7 +313,7 @@ export function ContactForm({
 					onChange={(e) => update("message", e.target.value)}
 					aria-invalid={Boolean(errors.message)}
 					aria-describedby={errors.message ? "cf-message-error" : undefined}
-					className={`${fieldClass(Boolean(errors.message))} not-resize`}
+					className={`${fieldClass(Boolean(errors.message))} resize-none`}
 				/>
 				{errors.message && (
 					<p
