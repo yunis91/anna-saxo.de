@@ -695,6 +695,12 @@ export interface Language {
  */
 export interface SiteSetting {
   id: number;
+  brand?: {
+    /**
+     * Wird im Navigationslogo und im Footer angezeigt.
+     */
+    name?: string | null;
+  };
   /**
    * #anker für Abschnitte (z. B. #leistungen) oder /slug für Unterseiten. Wenn leer, wird das Standardmenü verwendet.
    */
@@ -734,6 +740,11 @@ export interface LanguagesSelect<T extends boolean = true> {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  brand?:
+    | T
+    | {
+        name?: T;
+      };
   nav?:
     | T
     | {

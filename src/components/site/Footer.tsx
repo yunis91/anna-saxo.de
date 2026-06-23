@@ -12,14 +12,14 @@ const linkClass =
 
 const headingClass = "text-sm font-semibold text-zinc-900 dark:text-zinc-100";
 
-export function Footer() {
+export function Footer({ siteName = SITE.name }: { siteName?: string }) {
 	const year = new Date().getFullYear();
 
 	return (
 		<footer className="card p-7 sm:p-10">
 			<div className="flex flex-col gap-3 text-sm text-zinc-500 dark:border-white/10 dark:text-zinc-400 sm:flex-row sm:items-center sm:justify-between">
 				<p>
-					© {year} {SITE.name}. Alle Rechte vorbehalten.
+					© {year} {siteName}. Alle Rechte vorbehalten.
 				</p>
 				<ul className="flex flex-row flex-wrap gap-3">
 					{LEGAL.map((item) => (

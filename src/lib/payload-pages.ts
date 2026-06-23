@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { DEFAULT_LOCALE, LOCALES, type LocaleDef } from './locales'
+import { SITE } from './site'
 import type { Page } from '@/payload-types'
 
 function getClient() {
@@ -78,6 +79,18 @@ export async function getContact(): Promise<ContactDetails> {
     }
   } catch {
     return CONTACT_FALLBACK
+  }
+}
+
+/** Editor-managed site name from the SiteSettings global (with code fallback). */
+export async function getSiteName(): Promise<string> {
+  try {
+    const payload = await getClient()
+    const settings = await payload.findGlobal({ slug: 'site-settings' })
+    const name = settings?.brand?.name
+    return name?.trim() ? name.trim() : SITE.name
+  } catch {
+    return SITE.name
   }
 }
 

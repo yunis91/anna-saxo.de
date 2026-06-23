@@ -13,16 +13,16 @@ import { CtaButton } from "./CtaButton";
 import { LangSwitch } from "./LangSwitch";
 import Link from "next/link";
 
-function Wordmark({ onClick }: { onClick?: () => void }) {
+function Wordmark({ name, onClick }: { name: string; onClick?: () => void }) {
 	return (
 		<Link
 			href="#top"
 			onClick={onClick}
 			className="flex items-center gap-2.5 rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-900 dark:focus-visible:outline-white"
-			aria-label={`${SITE.name}, zur Startseite`}
+			aria-label={`${name}, zur Startseite`}
 		>
 			<span className="text-[15px] font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-				{SITE.name}
+				{name}
 			</span>
 		</Link>
 	);
@@ -32,10 +32,12 @@ export function Navbar({
 	locales,
 	contact,
 	navByLocale,
+	siteName = SITE.name,
 }: {
 	locales: LocaleDef[];
 	contact?: ContactDetails | null;
 	navByLocale: Record<string, NavItem[]>;
+	siteName?: string;
 }) {
 	const [open, setOpen] = useState(false);
 	const reduce = useReducedMotion();
@@ -62,7 +64,7 @@ export function Navbar({
 	return (
 		<header className="sticky top-3 z-50 sm:top-4 lg:top-5">
 			<nav className="card relative flex items-center justify-between rounded-full py-2 pl-3 pr-3 sm:pl-4">
-				<Wordmark />
+				<Wordmark name={siteName} />
 
 				<div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex">
 					{nav.map((item) => (
@@ -120,7 +122,7 @@ export function Navbar({
 							}
 						>
 							<div className="flex items-center justify-between">
-								<Wordmark onClick={() => setOpen(false)} />
+								<Wordmark name={siteName} onClick={() => setOpen(false)} />
 								<button
 									type="button"
 									onClick={() => setOpen(false)}

@@ -12,6 +12,7 @@ import {
 	getContact,
 	getGaId,
 	getNavByLocale,
+	getSiteName,
 } from "@/lib/payload-pages";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -44,11 +45,12 @@ export default async function FrontendLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const [locales, contact, navByLocale, gaId] = await Promise.all([
+	const [locales, contact, navByLocale, gaId, siteName] = await Promise.all([
 		getActiveLocales(),
 		getContact(),
 		getNavByLocale(),
 		getGaId(),
+		getSiteName(),
 	]);
 
 	return (
@@ -60,9 +62,10 @@ export default async function FrontendLayout({
 							locales={locales}
 							contact={contact}
 							navByLocale={navByLocale}
+							siteName={siteName}
 						/>
 						{children}
-						<Footer />
+						<Footer siteName={siteName} />
 					</div>
 				</div>
 				<CookieBanner />
