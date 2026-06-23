@@ -1,6 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { resendAdapter } from '@payloadcms/email-resend'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -46,6 +47,17 @@ export default buildConfig({
     fallback: true,
   },
   editor: lexicalEditor(),
+  plugins: [
+    // Medien in Vercel Blob speichern statt im (auf Vercel flüchtigen)
+    // Dateisystem. clientUploads: Browser lädt direkt zu Blob hoch und
+    // umgeht so das 4,5-MB-Limit der Serverless-Funktion.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: { media: true },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      clientUploads: true,
+    }),
+  ],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
