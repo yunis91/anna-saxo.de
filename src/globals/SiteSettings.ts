@@ -35,5 +35,21 @@ export const SiteSettings: GlobalConfig = {
         { name: 'city', type: 'text', label: 'Ort', defaultValue: 'Berlin' },
       ],
     },
+    {
+      name: 'analytics',
+      type: 'group',
+      label: 'Analytics',
+      fields: [
+        {
+          name: 'gaId',
+          type: 'text',
+          label: 'Google Analytics 4 — Mess-ID',
+          admin: {
+            description:
+              'Format: G-XXXXXXXXXX. Leer = kein Tracking. Wird erst nach Cookie-Zustimmung geladen.',
+          },
+        },
+      ],
+    },
   ],
 }

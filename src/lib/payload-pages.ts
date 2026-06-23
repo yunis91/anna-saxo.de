@@ -81,6 +81,18 @@ export async function getContact(): Promise<ContactDetails> {
   }
 }
 
+/** Google Analytics 4 Mess-ID from the SiteSettings global, or null if unset. */
+export async function getGaId(): Promise<string | null> {
+  try {
+    const payload = await getClient()
+    const settings = await payload.findGlobal({ slug: 'site-settings' })
+    const gaId = settings?.analytics?.gaId
+    return gaId?.trim() ? gaId.trim() : null
+  } catch {
+    return null
+  }
+}
+
 /**
  * Languages enabled by the editor in the "Sprachen" global, in their chosen
  * order. German is always present and forced first. Falls back to [de, ru].

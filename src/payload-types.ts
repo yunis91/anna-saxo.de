@@ -710,6 +710,12 @@ export interface SiteSetting {
     email?: string | null;
     city?: string | null;
   };
+  analytics?: {
+    /**
+     * Format: G-XXXXXXXXXX. Leer = kein Tracking. Wird erst nach Cookie-Zustimmung geladen.
+     */
+    gaId?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -741,6 +747,11 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         phone?: T;
         email?: T;
         city?: T;
+      };
+  analytics?:
+    | T
+    | {
+        gaId?: T;
       };
   updatedAt?: T;
   createdAt?: T;

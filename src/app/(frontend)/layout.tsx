@@ -6,9 +6,11 @@ import "./globals.css";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { CookieBanner } from "@/components/site/CookieBanner";
+import { Analytics } from "@/components/site/Analytics";
 import {
 	getActiveLocales,
 	getContact,
+	getGaId,
 	getNavByLocale,
 } from "@/lib/payload-pages";
 
@@ -44,10 +46,11 @@ export default async function FrontendLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	const [locales, contact, navByLocale] = await Promise.all([
+	const [locales, contact, navByLocale, gaId] = await Promise.all([
 		getActiveLocales(),
 		getContact(),
 		getNavByLocale(),
+		getGaId(),
 	]);
 
 	return (
@@ -65,6 +68,7 @@ export default async function FrontendLayout({
 					</div>
 				</div>
 				<CookieBanner />
+				<Analytics gaId={gaId} />
 			</body>
 		</html>
 	);

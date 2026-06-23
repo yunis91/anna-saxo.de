@@ -1,10 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, CheckCircle, CircleNotch, WarningCircle } from '@phosphor-icons/react'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/** How long the success message stays before the form is shown again. */
+const SUCCESS_RESET_DELAY_MS = 5000
 
 export interface ContactFormLabels {
   nameLabel: string
@@ -106,6 +109,14 @@ export function ContactForm({ labels }: { labels?: ContactFormLabelInput | null 
   const [values, setValues] = useState<FormValues>(INITIAL)
   const [errors, setErrors] = useState<FieldErrors>({})
   const [status, setStatus] = useState<Status>('idle')
+
+  // After a successful submission, show the confirmation briefly, then bring
+  // the (already reset) form back so a visitor can send another message.
+  useEffect(() => {
+    if (status !== 'success') return
+    const timer = setTimeout(() => setStatus('idle'), SUCCESS_RESET_DELAY_MS)
+    return () => clearTimeout(timer)
+  }, [status])
 
   const serviceOptions = [
     { value: 'insurance', label: t.insuranceLabel },
