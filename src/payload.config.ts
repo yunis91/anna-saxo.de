@@ -56,6 +56,9 @@ export default buildConfig({
       collections: { media: true },
       token: process.env.BLOB_READ_WRITE_TOKEN,
       clientUploads: true,
+      // Eindeutige Dateinamen vergeben, sonst schlägt das erneute Hochladen
+      // einer gleichnamigen Datei mit "blob already exists" (400) fehl.
+      addRandomSuffix: true,
     }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',
