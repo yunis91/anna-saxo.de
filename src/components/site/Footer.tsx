@@ -35,7 +35,10 @@ export function Footer({
 						</li>
 					))}
 					<li>
-						<CookieSettingsLink label="Cookie-Einstellungen" className={linkClass} />
+						<CookieSettingsLink
+							label="Cookie-Einstellungen"
+							className={linkClass}
+						/>
 					</li>
 				</ul>
 			</div>
