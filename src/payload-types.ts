@@ -359,6 +359,15 @@ export interface Page {
           }
       )[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    noindex?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -633,6 +642,14 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noindex?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -726,6 +743,21 @@ export interface SiteSetting {
     email?: string | null;
     city?: string | null;
   };
+  /**
+   * Fallback-Werte, wenn eine Seite keine eigenen SEO-Angaben hat.
+   */
+  seo?: {
+    /**
+     * Wird an den Seitentitel angehängt, z. B. „Datenschutz | Anna Saxo“.
+     */
+    titleSuffix?: string | null;
+    defaultDescription?: string | null;
+    defaultImage?: (number | null) | Media;
+    /**
+     * Inhalt des content-Attributs des Verifizierungs-Meta-Tags.
+     */
+    googleSiteVerification?: string | null;
+  };
   analytics?: {
     /**
      * Format: G-XXXXXXXXXX. Leer = kein Tracking. Wird erst nach Cookie-Zustimmung geladen.
@@ -775,6 +807,14 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         phone?: T;
         email?: T;
         city?: T;
+      };
+  seo?:
+    | T
+    | {
+        titleSuffix?: T;
+        defaultDescription?: T;
+        defaultImage?: T;
+        googleSiteVerification?: T;
       };
   analytics?:
     | T

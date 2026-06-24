@@ -2,6 +2,8 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { seoPlugin } from '@payloadcms/plugin-seo'
+import type { GenerateTitle, GenerateDescription } from '@payloadcms/plugin-seo/types'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -27,6 +29,17 @@ const email = process.env.RESEND_API_KEY
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+// Auto-fill values for empty SEO fields. The editor can override per page; these
+// only seed the inputs. Localized meta fields are filled from the (localized)
+// page title, so each language gets a sensible default.
+const generateTitle: GenerateTitle = ({ doc }: { doc?: { title?: string } }) =>
+  doc?.title ? `${doc.title} | Anna Saxo` : 'Anna Saxo'
+
+const generateDescription: GenerateDescription = ({ doc }: { doc?: { title?: string } }) =>
+  doc?.title
+    ? `${doc.title} — Anna Saxo, Versicherungsberatung und Übersetzungen Deutsch-Russisch.`
+    : ''
 
 export default buildConfig({
   admin: {
@@ -59,6 +72,28 @@ export default buildConfig({
       // Eindeutige Dateinamen vergeben, sonst schlägt das erneute Hochladen
       // einer gleichnamigen Datei mit "blob already exists" (400) fehl.
       addRandomSuffix: true,
+    }),
+    // SEO-Tab je Seite: Titel, Beschreibung und OG-Bild pflegbar pro Sprache.
+    // Meta-Felder werden lokalisiert (DE/RU/...); noindex gilt sprachübergreifend.
+    seoPlugin({
+      collections: ['pages'],
+      uploadsCollection: 'media',
+      tabbedUI: true,
+      generateTitle,
+      generateDescription,
+      fields: ({ defaultFields }) => [
+        ...defaultFields.map((field) =>
+          'name' in field && ['title', 'description', 'image'].includes(field.name)
+            ? { ...field, localized: true }
+            : field,
+        ),
+        {
+          name: 'noindex',
+          type: 'checkbox',
+          label: 'Von Suchmaschinen ausschließen (noindex)',
+          defaultValue: false,
+        },
+      ],
     }),
   ],
   secret: process.env.PAYLOAD_SECRET || '',

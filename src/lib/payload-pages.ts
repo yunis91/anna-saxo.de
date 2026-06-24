@@ -3,7 +3,7 @@ import config from '@payload-config'
 
 import { DEFAULT_LOCALE, LOCALES, type LocaleDef } from './locales'
 import { SITE } from './site'
-import type { Page } from '@/payload-types'
+import type { Page, SiteSetting } from '@/payload-types'
 
 function getClient() {
   return getPayload({ config })
@@ -108,6 +108,25 @@ export async function getSiteName(): Promise<string> {
     return name?.trim() ? name.trim() : SITE.name
   } catch {
     return SITE.name
+  }
+}
+
+/**
+ * SEO defaults from the SiteSettings global for the given locale (with German
+ * fallback). depth:1 so defaultImage resolves to a Media object with its URL.
+ */
+export async function getSeoSettings(locale: string): Promise<SiteSetting | null> {
+  try {
+    const payload = await getClient()
+    const settings = await payload.findGlobal({
+      slug: 'site-settings',
+      locale: locale as 'de',
+      fallbackLocale: DEFAULT_LOCALE as 'de',
+      depth: 1,
+    })
+    return (settings as SiteSetting) ?? null
+  } catch {
+    return null
   }
 }
 

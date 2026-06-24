@@ -13,26 +13,32 @@ import {
 	getFooterLegal,
 	getGaId,
 	getNavByLocale,
+	getSeoSettings,
 	getSiteName,
 } from "@/lib/payload-pages";
+import { DEFAULT_LOCALE } from "@/lib/locales";
+import { DEFAULT_DESCRIPTION, DEFAULT_TITLE, SITE_URL } from "@/lib/seo";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
+export async function generateMetadata(): Promise<Metadata> {
+	const settings = await getSeoSettings(DEFAULT_LOCALE);
+	const verification = settings?.seo?.googleSiteVerification?.trim();
 
-export const metadata: Metadata = {
-	metadataBase: new URL(SITE_URL),
-	title: {
-		default: "Anna Saxo | Versicherung & Übersetzungen Deutsch-Russisch",
-		template: "%s | Anna Saxo",
-	},
-	description:
-		"Persönliche Versicherungsberatung in Deutschland und Übersetzungen Deutsch-Russisch. Klar, ehrlich und zweisprachig.",
-	openGraph: {
-		type: "website",
-		locale: "de_DE",
-		siteName: "Anna Saxo",
-	},
-	robots: { index: true, follow: true },
-};
+	return {
+		metadataBase: new URL(SITE_URL),
+		title: {
+			default: DEFAULT_TITLE,
+			template: "%s | Anna Saxo",
+		},
+		description: DEFAULT_DESCRIPTION,
+		openGraph: {
+			type: "website",
+			locale: "de_DE",
+			siteName: "Anna Saxo",
+		},
+		robots: { index: true, follow: true },
+		verification: verification ? { google: verification } : undefined,
+	};
+}
 
 export const viewport: Viewport = {
 	// Light theme is forced site-wide; keep the browser chrome light too.

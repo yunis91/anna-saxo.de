@@ -76,6 +76,50 @@ export const SiteSettings: GlobalConfig = {
 			],
 		},
 		{
+			name: "seo",
+			type: "group",
+			label: "SEO (Standardwerte)",
+			admin: {
+				description:
+					"Fallback-Werte, wenn eine Seite keine eigenen SEO-Angaben hat.",
+			},
+			fields: [
+				{
+					name: "titleSuffix",
+					type: "text",
+					label: "Titel-Zusatz",
+					defaultValue: "Anna Saxo",
+					admin: {
+						description:
+							"Wird an den Seitentitel angehängt, z. B. „Datenschutz | Anna Saxo“.",
+					},
+				},
+				{
+					name: "defaultDescription",
+					type: "textarea",
+					label: "Standard-Beschreibung",
+					localized: true,
+					defaultValue:
+						"Persönliche Versicherungsberatung in Deutschland und Übersetzungen Deutsch-Russisch. Klar, ehrlich und zweisprachig.",
+				},
+				{
+					name: "defaultImage",
+					type: "upload",
+					label: "Standard OG-Bild",
+					relationTo: "media",
+				},
+				{
+					name: "googleSiteVerification",
+					type: "text",
+					label: "Google Search Console — Verifizierung",
+					admin: {
+						description:
+							"Inhalt des content-Attributs des Verifizierungs-Meta-Tags.",
+					},
+				},
+			],
+		},
+		{
 			name: "analytics",
 			type: "group",
 			label: "Analytics",

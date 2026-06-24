@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 import { DEFAULT_LOCALE } from "@/lib/locales";
-import { getActiveLocales, getContact, getPage } from "@/lib/payload-pages";
+import {
+	getActiveLocales,
+	getContact,
+	getPage,
+	getSeoSettings,
+} from "@/lib/payload-pages";
+import { buildMetadata } from "@/lib/seo";
 import { RenderBlocks } from "@/components/blocks/RenderBlocks";
 import { HomeSections } from "@/components/site/HomeSections";
 
@@ -27,7 +33,7 @@ async function resolve(segments: string[]) {
 	const rest = isLocalePrefix || isDePrefix ? segments.slice(1) : segments;
 	const pageSlug = rest.length ? rest.join("/") : "home";
 
-	return { locale, pageSlug, isDePrefix, restPath: rest.join("/") };
+	return { locale, pageSlug, isDePrefix, restPath: rest.join("/"), active };
 }
 
 export async function generateMetadata({
@@ -36,10 +42,18 @@ export async function generateMetadata({
 	params: Promise<RouteParams>;
 }): Promise<Metadata> {
 	const { slug = [] } = await params;
-	const { locale, pageSlug } = await resolve(slug);
-	if (pageSlug === "home") return {};
-	const page = await getPage(pageSlug, locale);
-	return page?.title ? { title: page.title } : {};
+	const { locale, pageSlug, active } = await resolve(slug);
+	const [page, settings] = await Promise.all([
+		getPage(pageSlug, locale),
+		getSeoSettings(locale),
+	]);
+	return buildMetadata({
+		page,
+		settings,
+		locale,
+		pageSlug,
+		activeLocales: active,
+	});
 }
 
 export default async function Page({
